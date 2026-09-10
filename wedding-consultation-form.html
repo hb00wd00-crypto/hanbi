@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>웨딩 상담 신청</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream: #F6F1EA;
+    --ink: #2C2622;
+    --ink-soft: #6B615A;
+    --wine: #7C4A4E;
+    --wine-soft: #A9767A;
+    --line: #DCD0C1;
+    --white: #FFFDFA;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight:300;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .page{
+    max-width: 560px;
+    margin: 0 auto;
+    min-height:100vh;
+    background: var(--cream);
+    position:relative;
+  }
+
+  .topnav{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(246,241,234,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .topnav-inner{
+    max-width: 560px;
+    margin: 0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 16px 24px;
+  }
+
+  .brand{
+    font-family:'Noto Serif KR', serif;
+    font-size: 16px;
+    font-weight:600;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+  }
+
+  .brand span{ color: var(--wine); font-weight:400; }
+
+  .nav-links{
+    display:flex;
+    gap: 18px;
+  }
+
+  .nav-links a{
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    text-decoration:none;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links a:hover{ color: var(--wine); }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding: 92px 40px 70px;
+    text-align:center;
+    opacity:0;
+    scroll-margin-top: 64px;
+    animation: rise 1.1s ease forwards 0.15s;
+  }
+
+  @keyframes rise{
+    from{ opacity:0; transform: translateY(14px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  .hero .eyebrow{
+    font-family:'Noto Serif KR', serif;
+    font-weight:300;
+    font-size:13px;
+    letter-spacing:0.35em;
+    color: var(--wine-soft);
+    margin-bottom: 22px;
+  }
+
+  .hero h1{
+    font-family:'Noto Serif KR', serif;
+    font-weight:500;
+    font-size: 34px;
+    line-height:1.5;
+    color: var(--ink);
+  }
+
+  .flourish{
+    width: 1px;
+    height: 46px;
+    background: linear-gradient(var(--wine-soft), transparent);
+    margin: 30px auto 26px;
+  }
+
+  .flourish-emoji{
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    color: var(--wine-soft);
+    margin-bottom: 22px;
+  }
+
+  .hero p{
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .about-btn{
+    margin: 30px auto 0;
+    display:inline-flex;
+    align-items:center;
+    gap: 6px;
+    padding: 10px 22px;
+    border: 1px solid var(--wine-soft);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--wine);
+    font-family:'Noto Serif KR', serif;
+    font-size: 13.5px;
+    letter-spacing: 0.04em;
+    cursor:pointer;
+    transition: background .2s ease, color .2s ease;
+  }
+
+  .about-btn:hover{ background: var(--wine); color: var(--white); }
+
+  .about-btn-arrow{
+    display:inline-block;
+    transition: transform .3s ease;
+  }
+
+  .about-btn.active .about-btn-arrow{ transform: rotate(90deg); }
+
+  .about-section{
+    scroll-margin-top: 64px;
+  }
+
+  .about-inner{ padding-top: 40px; }
+
+  /* ---------- Section shell ---------- */
+  .section{ padding: 0 32px; }
+  #consultForm{ scroll-margin-top: 64px; display:block; }
+
+  .section-inner{
+    border-top: 1px solid var(--line);
+    padding: 44px 0 6px;
+  }
+
+  .section-title{
+    font-family:'Noto Serif KR', serif;
+    font-size: 19px;
+    font-weight:500;
+    margin-bottom: 6px;
+  }
+
+  .section-sub{
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 26px;
+  }
+
+  .about-text{
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.9;
+    padding-bottom: 8px;
+  }
+
+  /* ---------- Form ---------- */
+  .field{ margin-bottom: 30px; }
+
+  .field label{
+    display:block;
+    font-size: 13px;
+    color: var(--ink);
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  .field .req{ color: var(--wine); margin-left:2px; }
+  .field label.emph{ font-size:14.5px; font-weight:600; }
+
+  input[type=text],
+  input[type=tel],
+  textarea{
+    width:100%;
+    border:none;
+    border-bottom: 1px solid var(--line);
+    background: transparent;
+    padding: 10px 2px;
+    font-family:'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    font-weight:300;
+    color: var(--ink);
+    transition: border-color .25s ease;
+  }
+
+  input::placeholder, textarea::placeholder{
+    color: #B6AB9E;
+    font-weight:300;
+  }
+
+  input:focus, textarea:focus{
+    outline:none;
+    border-bottom-color: var(--wine);
+  }
+
+  textarea{
+    resize:none;
+    min-height: 100px;
+    line-height:1.7;
+  }
+
+  /* ---------- Wheel picker ---------- */
+  .wheel-frame{
+    position:relative;
+    height:180px;
+  }
+
+  .wheel-frame .highlight-bar{
+    position:absolute;
+    top:68px;
+    left:0; right:0;
+    height:44px;
+    border-top:1px solid var(--wine-soft);
+    border-bottom:1px solid var(--wine-soft);
+    pointer-events:none;
+    z-index:2;
+  }
+
+  .wheel-group{
+    display:flex;
+    gap: 6px;
+    height:100%;
+  }
+
+  .wheel-group.single{ display:block; }
+
+  .wheel{
+    flex:1;
+    height:100%;
+    overflow-y:scroll;
+    scroll-snap-type:y mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 46px, #000 134px, transparent 180px);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 46px, #000 134px, transparent 180px);
+  }
+
+  .wheel::-webkit-scrollbar{ display:none; }
+
+  .wheel-spacer{ height:68px; }
+
+  .wheel-item{
+    height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:15px;
+    color: var(--ink-soft);
+    scroll-snap-align:center;
+    transition: color .15s ease, font-size .15s ease, font-weight .15s ease;
+  }
+
+  .wheel-item.active{
+    color: var(--ink);
+    font-weight:500;
+    font-size:17px;
+  }
+
+  .undecided-toggle{
+    margin-top: 8px;
+    font-size:12.5px;
+    color: var(--wine-soft);
+    text-align:center;
+  }
+
+  /* ---------- Submit ---------- */
+  .submit-wrap{ padding: 20px 32px 90px; text-align:center; }
+
+  button.submit{
+    width:100%;
+    padding: 16px;
+    background: var(--wine);
+    color: var(--white);
+    border:none;
+    font-family:'Noto Serif KR', serif;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    cursor:pointer;
+    transition: background .25s ease;
+  }
+
+  button.submit:hover{ background:#663d40; }
+  button.submit:disabled{ opacity:.6; cursor:default; }
+
+  .submit-note{ margin-top: 16px; font-size: 12px; color: var(--ink-soft); }
+
+  .hours-box{
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 10px 18px;
+    margin-top: 28px;
+    background: var(--white);
+    display:inline-block;
+  }
+
+  .hours-time{
+    font-family:'Noto Serif KR', serif;
+    font-size: 12px;
+    font-weight:500;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+
+  .hours-off{
+    font-size: 10.5px;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- Confirmation ---------- */
+  .confirm{ display:none; padding: 110px 40px; text-align:center; }
+  .confirm.show{ display:block; }
+  .page.submitted .hero,
+  .page.submitted .section,
+  .page.submitted .submit-wrap{ display:none; }
+
+  .confirm .mark{
+    width: 46px; height:46px;
+    border:1px solid var(--wine-soft);
+    border-radius:50%;
+    margin: 0 auto 28px;
+    display:flex; align-items:center; justify-content:center;
+    color: var(--wine);
+    font-family:'Noto Serif KR', serif;
+    font-size:20px;
+  }
+
+  .confirm h2{
+    font-family:'Noto Serif KR', serif;
+    font-weight:500;
+    font-size:22px;
+    margin-bottom: 14px;
+  }
+
+  .confirm p{
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .confirm .summary{
+    margin-top: 36px;
+    border-top:1px solid var(--line);
+    padding-top: 24px;
+    text-align:left;
+    font-size:13px;
+    color: var(--ink-soft);
+  }
+  .confirm .summary div{ margin-bottom:8px; }
+  .confirm .summary b{ color: var(--ink); font-weight:500; }
+
+  @media (max-width: 400px){
+    .hero{ padding: 72px 26px 54px; }
+    .hero h1{ font-size: 28px; }
+    .section{ padding: 0 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page" id="page">
+
+  <nav class="topnav">
+    <div class="topnav-inner">
+      <div class="brand">@hb_wd_pl</div>
+    </div>
+  </nav>
+
+  <div class="hero" id="top">
+    <div class="eyebrow">C O N S U L T A T I O N</div>
+    <h1>신랑, 신부님의<br>이야기를 들려주세요</h1>
+    <div class="flourish"></div>
+    <div class="flourish-emoji">♡ &nbsp;🐝&nbsp; 🌷</div>
+    <p>안녕하세요💖 한비플 입니다!<br>취향과 설렘, 그 안의 작은 디테일까지 진심으로 담아<br>두 분만의 하루를 함께 준비하고 싶어요.</p>
+  </div>
+
+  <form id="consultForm">
+    <div class="section">
+      <div class="section-inner">
+        <div class="section-title">기본 정보</div>
+        <div class="section-sub">상담 안내를 위해 정확히 입력해 주세요.</div>
+
+        <div class="field">
+          <label>이름<span class="req">*</span></label>
+          <input type="text" name="applicantName" id="applicantName" placeholder="홍길동" required>
+        </div>
+
+        <div class="field">
+          <label>연락처<span class="req">*</span></label>
+          <input type="tel" name="phone" id="phone" placeholder="010 - 0000 - 0000" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-inner">
+        <div class="section-title">예상 예식 일정</div>
+        <div class="section-sub">스크롤로 연/월/일을 선택해 주세요.</div>
+
+        <div class="field">
+          <div class="wheel-frame">
+            <div class="highlight-bar"></div>
+            <div class="wheel-group">
+              <div class="wheel" id="wheelYear"></div>
+              <div class="wheel" id="wheelMonth"></div>
+              <div class="wheel" id="wheelDay"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="emph">아직 날짜가 확정되지 않았다면</label>
+          <div class="wheel-frame">
+            <div class="highlight-bar"></div>
+            <div class="wheel-group single">
+              <div class="wheel" id="wheelUndecided"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-inner">
+        <div class="section-title">남기고 싶은 말</div>
+        <div class="section-sub">원하시는 분위기나 궁금한 점을 자유롭게 적어주세요.</div>
+
+        <div class="field">
+          <textarea name="message" id="message" placeholder="예) 자연스럽고 따뜻한 톤의 사진을 원해요."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-wrap">
+      <button type="submit" class="submit" id="submitBtn">상담 신청하기</button>
+      <div class="submit-note">상담 가능 시간에 확인 후<br>순차적으로 답변 드릴게요😉💕</div>
+      <div class="hours-box">
+        <div class="hours-time">화 - 토 &nbsp;·&nbsp; 11:00 - 19:00</div>
+        <div class="hours-off">상담휴무 &nbsp;일 · 월 / 공휴일</div>
+      </div>
+    </div>
+  </form>
+
+  <div class="confirm" id="confirmBox">
+    <div class="mark">✓</div>
+    <h2>상담 신청이 접수되었어요</h2>
+    <p>소중한 이야기 감사합니다. 안내드린 연락처로<br>곧 연락드리겠습니다.</p>
+    <div class="summary" id="summaryBox"></div>
+  </div>
+
+</div>
+
+<script>
+  // ────────────────────────────────────────────────────────────
+  // 여기에 Formspree 엔드포인트를 넣으면 제출 즉시 이메일로 알림이 옵니다.
+  // 1) https://formspree.io 무료 가입 → 새 Form 생성 → 본인 이메일 연결
+  // 2) 발급된 주소를 아래 따옴표 안에 붙여넣기 (예: 'https://formspree.io/f/abcdwxyz')
+  // 비워두면 데모 모드로 동작해서 실제 전송 없이 완료 화면만 보여줍니다.
+  const FORM_ENDPOINT = '';
+  // ────────────────────────────────────────────────────────────
+
+  function pad(n){ return String(n).padStart(2, '0'); }
+
+  function buildWheel(el, items){
+    el.innerHTML = '';
+    const top = document.createElement('div');
+    top.className = 'wheel-spacer';
+    el.appendChild(top);
+
+    items.forEach((label, i) => {
+      const item = document.createElement('div');
+      item.className = 'wheel-item';
+      item.textContent = label;
+      item.dataset.index = i;
+      el.appendChild(item);
+    });
+
+    const bottom = document.createElement('div');
+    bottom.className = 'wheel-spacer';
+    el.appendChild(bottom);
+
+    const state = { items, selectedIndex: 0 };
+    el._wheelState = state;
+
+    let scrollTimer = null;
+    function updateActive(){
+      const idx = Math.round(el.scrollTop / 44);
+      const clamped = Math.max(0, Math.min(items.length - 1, idx));
+      [...el.querySelectorAll('.wheel-item')].forEach((it, i) => {
+        it.classList.toggle('active', i === clamped);
+      });
+      state.selectedIndex = clamped;
+    }
+
+    el.addEventListener('scroll', () => {
+      updateActive();
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        el.scrollTo({ top: state.selectedIndex * 44, behavior: 'smooth' });
+      }, 120);
+    });
+
+    updateActive();
+    return state;
+  }
+
+  const years = ['0000년'];
+  for (let y = 2026; y <= 2029; y++) years.push(y + '년');
+  const months = ['00월'];
+  for (let m = 1; m <= 12; m++) months.push(m + '월');
+  const days = ['00일'];
+  for (let d = 1; d <= 31; d++) days.push(d + '일');
+
+  const undecidedOptions = ['미정', '2026년 이내 예식', '2027년 상반기', '2027년 하반기', '2028년 상반기'];
+
+  const wheelYear = buildWheel(document.getElementById('wheelYear'), years);
+  const wheelMonth = buildWheel(document.getElementById('wheelMonth'), months);
+  const wheelDay = buildWheel(document.getElementById('wheelDay'), days);
+  const wheelUndecided = buildWheel(document.getElementById('wheelUndecided'), undecidedOptions);
+
+  const form = document.getElementById('consultForm');
+  const page = document.getElementById('page');
+  const confirmBox = document.getElementById('confirmBox');
+  const summaryBox = document.getElementById('summaryBox');
+  const submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+
+    const name = document.getElementById('applicantName').value || '-';
+    const phone = document.getElementById('phone').value || '-';
+    const message = document.getElementById('message').value || '(작성 안 함)';
+
+    const pickedDate = `${years[wheelYear.selectedIndex]} ${months[wheelMonth.selectedIndex]} ${days[wheelDay.selectedIndex]}`;
+    const pickedUndecided = undecidedOptions[wheelUndecided.selectedIndex];
+
+    const payload = {
+      name, phone, message,
+      wedding_date: pickedDate,
+      timing_option: pickedUndecided
+    };
+
+    function showConfirm(){
+      summaryBox.innerHTML = `
+        <div><b>${name}</b> 님</div>
+        <div>연락처 &nbsp;${phone}</div>
+        <div>희망 일정 &nbsp;${pickedDate} (또는 ${pickedUndecided})</div>
+      `;
+      page.classList.add('submitted');
+      confirmBox.classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    if (!FORM_ENDPOINT){
+      // 데모 모드: 엔드포인트 미설정 상태
+      showConfirm();
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = '전송 중...';
+
+    try{
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok){
+        showConfirm();
+      } else {
+        alert('전송 중 문제가 발생했어요. 잠시 후 다시 시도해 주세요.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = '상담 신청하기';
+      }
+    } catch(err){
+      alert('네트워크 오류로 전송하지 못했어요. 잠시 후 다시 시도해 주세요.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = '상담 신청하기';
+    }
+  });
+</script>
+
+</body>
+</html>
