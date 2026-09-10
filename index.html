@@ -175,19 +175,19 @@
 
   .section-title{
     font-family:'Noto Serif KR', serif;
-    font-size: 19px;
+    font-size: 21px;
     font-weight:500;
     margin-bottom: 6px;
   }
 
   .section-sub{
-    font-size: 13px;
+    font-size: 14.5px;
     color: var(--ink-soft);
     margin-bottom: 26px;
   }
 
   .about-text{
-    font-size: 14px;
+    font-size: 15.5px;
     color: var(--ink-soft);
     line-height: 1.9;
     padding-bottom: 8px;
@@ -198,14 +198,14 @@
 
   .field label{
     display:block;
-    font-size: 13px;
+    font-size: 14.5px;
     color: var(--ink);
     margin-bottom: 12px;
     letter-spacing: 0.02em;
   }
 
   .field .req{ color: var(--wine); margin-left:2px; }
-  .field label.emph{ font-size:14.5px; font-weight:600; }
+  .field label.emph{ font-size:16px; font-weight:600; }
 
   input[type=text],
   input[type=tel],
@@ -216,7 +216,7 @@
     background: transparent;
     padding: 10px 2px;
     font-family:'Noto Sans KR', sans-serif;
-    font-size: 15px;
+    font-size: 16.5px;
     font-weight:300;
     color: var(--ink);
     transition: border-color .25s ease;
@@ -283,7 +283,7 @@
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:15px;
+    font-size:16.5px;
     color: var(--ink-soft);
     scroll-snap-align:center;
     transition: color .15s ease, font-size .15s ease, font-weight .15s ease;
@@ -292,7 +292,7 @@
   .wheel-item.active{
     color: var(--ink);
     font-weight:500;
-    font-size:17px;
+    font-size:18.5px;
   }
 
   .undecided-toggle{
@@ -312,7 +312,7 @@
     color: var(--white);
     border:none;
     font-family:'Noto Serif KR', serif;
-    font-size: 15px;
+    font-size: 16.5px;
     letter-spacing: 0.08em;
     cursor:pointer;
     transition: background .25s ease;
@@ -321,7 +321,7 @@
   button.submit:hover{ background:#663d40; }
   button.submit:disabled{ opacity:.6; cursor:default; }
 
-  .submit-note{ margin-top: 16px; font-size: 12px; color: var(--ink-soft); }
+  .submit-note{ margin-top: 16px; font-size: 13.5px; color: var(--ink-soft); }
 
   .hours-box{
     border: 1px solid var(--line);
@@ -334,14 +334,14 @@
 
   .hours-time{
     font-family:'Noto Serif KR', serif;
-    font-size: 12px;
+    font-size: 13.5px;
     font-weight:500;
     color: var(--ink);
     margin-bottom: 3px;
   }
 
   .hours-off{
-    font-size: 10.5px;
+    font-size: 12px;
     color: var(--ink-soft);
   }
 
@@ -500,6 +500,18 @@
 
   function pad(n){ return String(n).padStart(2, '0'); }
 
+  const phoneInput = document.getElementById('phone');
+  phoneInput.addEventListener('input', function(){
+    let digits = phoneInput.value.replace(/[^0-9]/g, '').slice(0, 11);
+    let formatted = digits;
+    if (digits.length > 3 && digits.length <= 7){
+      formatted = digits.slice(0, 3) + '-' + digits.slice(3);
+    } else if (digits.length > 7){
+      formatted = digits.slice(0, 3) + '-' + digits.slice(3, 7) + '-' + digits.slice(7);
+    }
+    phoneInput.value = formatted;
+  });
+
   function buildWheel(el, items){
     el.innerHTML = '';
     const top = document.createElement('div');
@@ -543,14 +555,14 @@
     return state;
   }
 
-  const years = ['0000년'];
+  const years = [''];
   for (let y = 2026; y <= 2029; y++) years.push(y + '년');
-  const months = ['00월'];
+  const months = [''];
   for (let m = 1; m <= 12; m++) months.push(m + '월');
-  const days = ['00일'];
+  const days = [''];
   for (let d = 1; d <= 31; d++) days.push(d + '일');
 
-  const undecidedOptions = ['미정', '2026년 이내 예식', '2027년 상반기', '2027년 하반기', '2028년 상반기'];
+  const undecidedOptions = ['', '미정', '2026년 이내 예식', '2027년 상반기', '2027년 하반기', '2028년 상반기'];
 
   const wheelYear = buildWheel(document.getElementById('wheelYear'), years);
   const wheelMonth = buildWheel(document.getElementById('wheelMonth'), months);
