@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>웨딩 상담 신청</title>
+<title>한비플 웨딩 상담 신청</title>
+<meta property="og:title" content="한비플 웨딩 상담 신청">
+<meta property="og:description" content="취향과 설렘, 그 안의 작은 디테일까지 진심으로 담아 함께 준비할게요.">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -307,18 +310,36 @@
 
   button.submit{
     width:100%;
-    padding: 16px;
-    background: var(--wine);
+    padding: 17px;
+    background: linear-gradient(180deg, rgba(124,74,78,0.92) 0%, rgba(124,74,78,0.8) 100%);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
     color: var(--white);
-    border:none;
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 22px;
     font-family:'Noto Serif KR', serif;
     font-size: 16.5px;
     letter-spacing: 0.08em;
     cursor:pointer;
-    transition: background .25s ease;
+    box-shadow:
+      0 10px 24px rgba(124,74,78,0.32),
+      inset 0 1px 0 rgba(255,255,255,0.35),
+      inset 0 -1px 6px rgba(0,0,0,0.08);
+    transition: transform .15s ease, box-shadow .2s ease, background .25s ease;
   }
 
-  button.submit:hover{ background:#663d40; }
+  button.submit:hover{
+    background: linear-gradient(180deg, rgba(108,63,67,0.92) 0%, rgba(108,63,67,0.8) 100%);
+  }
+
+  button.submit:active{
+    transform: scale(0.98);
+    box-shadow:
+      0 4px 12px rgba(124,74,78,0.28),
+      inset 0 1px 0 rgba(255,255,255,0.3),
+      inset 0 -1px 6px rgba(0,0,0,0.1);
+  }
+
   button.submit:disabled{ opacity:.6; cursor:default; }
 
   .submit-note{ margin-top: 16px; font-size: 13.5px; color: var(--ink-soft); }
@@ -584,8 +605,13 @@
 
     const pickedDate = `${years[wheelYear.selectedIndex]} ${months[wheelMonth.selectedIndex]} ${days[wheelDay.selectedIndex]}`;
     const pickedUndecided = undecidedOptions[wheelUndecided.selectedIndex];
+    const isDateEmpty = pickedDate.trim() === '';
+    const dateDisplay = isDateEmpty
+      ? (pickedUndecided.trim() ? pickedUndecided : '미정')
+      : pickedDate;
 
     const payload = {
+      _subject: `[한비플 웨딩 상담 신청] ${name} 님 - ${dateDisplay}`,
       name, phone, message,
       wedding_date: pickedDate,
       timing_option: pickedUndecided
@@ -595,7 +621,7 @@
       summaryBox.innerHTML = `
         <div><b>${name}</b> 님</div>
         <div>연락처 &nbsp;${phone}</div>
-        <div>희망 일정 &nbsp;${pickedDate} (또는 ${pickedUndecided})</div>
+        <div>희망 일정 &nbsp;${dateDisplay}</div>
       `;
       page.classList.add('submitted');
       confirmBox.classList.add('show');
