@@ -306,6 +306,128 @@
     text-align:center;
   }
 
+  /* ---------- Style chips ---------- */
+  .chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 9px;
+  }
+
+  .chip{ position:relative; }
+
+  .chip input{
+    position:absolute;
+    opacity:0;
+    width:100%;
+    height:100%;
+    cursor:pointer;
+    margin:0;
+  }
+
+  .chip span{
+    display:inline-block;
+    padding: 10px 17px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 14px;
+    color: var(--ink-soft);
+    background: var(--white);
+    transition: all .2s ease;
+  }
+
+  .chip input:checked + span{
+    background: var(--wine);
+    border-color: var(--wine);
+    color: var(--white);
+  }
+
+  .chip.disabled{ opacity: .4; }
+  .chip.disabled input{ pointer-events:none; cursor:default; }
+
+  .chip-note{
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--wine-soft);
+  }
+
+  /* ---------- Dress silhouette checklist ---------- */
+  .dress-list{
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+  }
+
+  .dress-check{
+    position:relative;
+    display:flex;
+    align-items:flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--white);
+    cursor:pointer;
+    transition: all .2s ease;
+  }
+
+  .dress-check input{
+    position:absolute;
+    opacity:0;
+    width:100%;
+    height:100%;
+    left:0; top:0;
+    cursor:pointer;
+    margin:0;
+  }
+
+  .dress-check-box{
+    flex-shrink:0;
+    width: 19px;
+    height: 19px;
+    margin-top: 2px;
+    border-radius: 6px;
+    border: 1.5px solid var(--line);
+    background: var(--cream);
+    position:relative;
+    transition: all .2s ease;
+  }
+
+  .dress-check input:checked ~ .dress-check-box{
+    background: var(--wine);
+    border-color: var(--wine);
+  }
+
+  .dress-check input:checked ~ .dress-check-box::after{
+    content:'';
+    position:absolute;
+    left:5px; top:1px;
+    width:5px; height:9px;
+    border: solid var(--white);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .dress-check input:checked ~ .dress-check-text b{ color: var(--wine); }
+
+  .dress-check-text b{
+    display:block;
+    font-size: 14.5px;
+    font-weight:500;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+
+  .dress-check-text small{
+    display:block;
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height:1.5;
+    font-weight:300;
+  }
+
+  .dress-check.disabled{ opacity:.4; }
+  .dress-check.disabled input{ pointer-events:none; cursor:default; }
+
   /* ---------- Submit ---------- */
   .submit-wrap{ padding: 20px 32px 90px; text-align:center; }
 
@@ -483,6 +605,99 @@
 
     <div class="section">
       <div class="section-inner">
+        <div class="section-title">선호하는 드레스 스타일</div>
+        <div class="section-sub">최대 3개까지 선택해 주세요.</div>
+
+        <div class="field">
+          <div class="chips">
+            <label class="chip"><input type="checkbox" name="likeStyle" value="유니크"><span>유니크</span></label>
+            <label class="chip"><input type="checkbox" name="likeStyle" value="러블리"><span>러블리</span></label>
+            <label class="chip"><input type="checkbox" name="likeStyle" value="모던"><span>모던</span></label>
+            <label class="chip"><input type="checkbox" name="likeStyle" value="청순"><span>청순</span></label>
+            <label class="chip"><input type="checkbox" name="likeStyle" value="우아"><span>우아</span></label>
+            <label class="chip"><input type="checkbox" name="likeStyle" value="로맨틱"><span>로맨틱</span></label>
+            <label class="chip"><input type="checkbox" name="likeStyle" value="클래식"><span>클래식</span></label>
+            <label class="chip"><input type="checkbox" name="likeStyle" value="아직 잘 모르겠다"><span>아직 잘 모르겠다</span></label>
+            <label class="chip"><input type="checkbox" name="likeStyle" value="다 좋다🤍"><span>다 좋다🤍</span></label>
+          </div>
+          <div class="chip-note">"아직 잘 모르겠다" 또는 "다 좋다"는 1개만 선택돼요.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-inner">
+        <div class="section-title">가장 피하고 싶은 드레스 형태</div>
+        <div class="section-sub">최대 2개까지 선택해 주세요.</div>
+
+        <div class="field">
+          <div class="dress-list">
+            <label class="dress-check">
+              <input type="checkbox" name="avoidStyle" value="A라인">
+              <span class="dress-check-box"></span>
+              <span class="dress-check-text">
+                <b>A라인</b>
+                <small>허리부터 밑단까지 자연스럽게 퍼지는 가장 기본적인 실루엣</small>
+              </span>
+            </label>
+            <label class="dress-check">
+              <input type="checkbox" name="avoidStyle" value="벨라인">
+              <span class="dress-check-box"></span>
+              <span class="dress-check-text">
+                <b>벨라인</b>
+                <small>허리 아래부터 풍성하게 퍼지는 종 모양</small>
+              </span>
+            </label>
+            <label class="dress-check">
+              <input type="checkbox" name="avoidStyle" value="머메이드">
+              <span class="dress-check-box"></span>
+              <span class="dress-check-text">
+                <b>머메이드</b>
+                <small>몸의 라인을 따라가다가 무릎 아래부터 크게 퍼지는 형태</small>
+              </span>
+            </label>
+            <label class="dress-check">
+              <input type="checkbox" name="avoidStyle" value="트럼펫">
+              <span class="dress-check-box"></span>
+              <span class="dress-check-text">
+                <b>트럼펫</b>
+                <small>허벅지 정도까지 바디라인을 잡고 아래로 점점 퍼지는 형태</small>
+              </span>
+            </label>
+            <label class="dress-check">
+              <input type="checkbox" name="avoidStyle" value="H라인">
+              <span class="dress-check-box"></span>
+              <span class="dress-check-text">
+                <b>H라인</b>
+                <small>허리선을 크게 강조하지 않고 전체적으로 일자로 떨어지는 실루엣</small>
+              </span>
+            </label>
+            <label class="dress-check">
+              <input type="checkbox" name="avoidStyle" value="엠파이어">
+              <span class="dress-check-box"></span>
+              <span class="dress-check-text">
+                <b>엠파이어</b>
+                <small>가슴 바로 아래 높은 위치에서 스커트가 자연스럽게 떨어지는 형태</small>
+              </span>
+            </label>
+            <label class="dress-check">
+              <input type="checkbox" name="avoidStyle" value="아직 잘 모르겠다">
+              <span class="dress-check-box"></span>
+              <span class="dress-check-text"><b>아직 잘 모르겠다</b></span>
+            </label>
+            <label class="dress-check">
+              <input type="checkbox" name="avoidStyle" value="다 좋다🤍">
+              <span class="dress-check-box"></span>
+              <span class="dress-check-text"><b>다 좋다🤍</b></span>
+            </label>
+          </div>
+          <div class="chip-note">"아직 잘 모르겠다" 또는 "다 좋다"는 1개만 선택돼요.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-inner">
         <div class="section-title">남기고 싶은 말</div>
         <div class="section-sub">원하시는 분위기나 궁금한 점을 자유롭게 적어주세요.</div>
 
@@ -533,6 +748,46 @@
     }
     phoneInput.value = formatted;
   });
+
+  function setupLimitedGroup(name, maxRegular, exclusiveValues){
+    const boxes = [...document.querySelectorAll(`input[name="${name}"]`)];
+
+    function refreshState(){
+      const checkedRegular = boxes.filter(b => b.checked && !exclusiveValues.includes(b.value));
+      const anyExclusive = boxes.some(b => b.checked && exclusiveValues.includes(b.value));
+      boxes.forEach(b => {
+        const label = b.closest('label');
+        const isExclusive = exclusiveValues.includes(b.value);
+        let disabled = false;
+        if (!b.checked){
+          if (anyExclusive) disabled = true;
+          else if (!isExclusive && checkedRegular.length >= maxRegular) disabled = true;
+        }
+        label.classList.toggle('disabled', disabled);
+      });
+    }
+
+    boxes.forEach(b => {
+      b.addEventListener('change', () => {
+        const isExclusive = exclusiveValues.includes(b.value);
+        if (b.checked){
+          if (isExclusive){
+            boxes.forEach(other => { if (other !== b) other.checked = false; });
+          } else {
+            boxes.forEach(other => { if (exclusiveValues.includes(other.value)) other.checked = false; });
+            const checkedRegular = boxes.filter(x => x.checked && !exclusiveValues.includes(x.value));
+            if (checkedRegular.length > maxRegular) b.checked = false;
+          }
+        }
+        refreshState();
+      });
+    });
+
+    refreshState();
+  }
+
+  setupLimitedGroup('likeStyle', 3, ['아직 잘 모르겠다', '다 좋다🤍']);
+  setupLimitedGroup('avoidStyle', 2, ['아직 잘 모르겠다', '다 좋다🤍']);
 
   function buildWheel(el, items){
     el.innerHTML = '';
@@ -611,11 +866,18 @@
       ? (pickedUndecided.trim() ? pickedUndecided : '미정')
       : pickedDate;
 
+    const likeStyle = [...document.querySelectorAll('input[name="likeStyle"]:checked')].map(b => b.value);
+    const avoidStyle = [...document.querySelectorAll('input[name="avoidStyle"]:checked')].map(b => b.value);
+    const likeStyleText = likeStyle.length ? likeStyle.join(', ') : '미선택';
+    const avoidStyleText = avoidStyle.length ? avoidStyle.join(', ') : '미선택';
+
     const payload = {
       _subject: `[한비플 웨딩 상담 신청] ${name} 님 - ${dateDisplay}`,
       name, phone, message,
       wedding_date: pickedDate,
-      timing_option: pickedUndecided
+      timing_option: pickedUndecided,
+      like_dress_style: likeStyleText,
+      avoid_dress_style: avoidStyleText
     };
 
     function showConfirm(){
@@ -623,6 +885,8 @@
         <div><b>${name}</b> 님</div>
         <div>연락처 &nbsp;${phone}</div>
         <div>희망 일정 &nbsp;${dateDisplay}</div>
+        <div>선호 스타일 &nbsp;${likeStyleText}</div>
+        <div>피하고 싶은 형태 &nbsp;${avoidStyleText}</div>
       `;
       page.classList.add('submitted');
       confirmBox.classList.add('show');
