@@ -309,6 +309,24 @@
   /* ---------- Submit ---------- */
   .submit-wrap{ padding: 20px 32px 90px; text-align:center; }
 
+  .consent-check{
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    margin-bottom: 20px;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    cursor:pointer;
+  }
+
+  .consent-check input{
+    width: 16px;
+    height: 16px;
+    accent-color: var(--wine);
+    cursor:pointer;
+    margin:0;
+  }
+
   button.submit{
     width:100%;
     padding: 17px;
@@ -493,7 +511,11 @@
     </div>
 
     <div class="submit-wrap">
-      <button type="submit" class="submit" id="submitBtn">상담 신청하기</button>
+      <label class="consent-check">
+        <input type="checkbox" name="kakaoConsent" id="kakaoConsent">
+        <span>개인정보 수집 및 카카오톡을 통한 상담 안내 수신에 동의합니다.</span>
+      </label>
+      <button type="submit" class="submit" id="submitBtn" disabled>상담 신청하기</button>
       <div class="submit-note">상담 가능 시간에 확인 후<br>순차적으로 답변 드릴게요😉💕</div>
       <div class="hours-box">
         <div class="hours-time">화 - 토 &nbsp;·&nbsp; 11:00 - 19:00</div>
@@ -597,6 +619,11 @@
   const summaryBox = document.getElementById('summaryBox');
   const submitBtn = document.getElementById('submitBtn');
 
+  const kakaoConsentBox = document.getElementById('kakaoConsent');
+  kakaoConsentBox.addEventListener('change', () => {
+    submitBtn.disabled = !kakaoConsentBox.checked;
+  });
+
   form.addEventListener('submit', async function(e){
     e.preventDefault();
 
@@ -611,11 +638,14 @@
       ? (pickedUndecided.trim() ? pickedUndecided : '미정')
       : pickedDate;
 
+    const kakaoConsent = document.getElementById('kakaoConsent').checked ? '동의' : '미동의';
+
     const payload = {
       _subject: `[한비플 웨딩 상담 신청] ${name} 님 - ${dateDisplay}`,
       name, phone, message,
       wedding_date: pickedDate,
-      timing_option: pickedUndecided
+      timing_option: pickedUndecided,
+      kakao_consent: kakaoConsent
     };
 
     function showConfirm(){
